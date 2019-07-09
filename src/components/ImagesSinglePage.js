@@ -8,16 +8,17 @@ export default class ImagesSinglePage extends React.Component {
 
   componentDidMount = () => {
     this.state.images.then(images =>
-      this.setState({ images: images, loaded: true })
+      this.setState({ images: images, loaded: true, refresh: this.props.refresh })
     );
   };
+
 
   render() {
     return (
       <ErrorBoundary>
-        <div className="PageImages">
+        <div className={"PageImages " + this.state.refresh}>
           {this.state.loaded &&
-            this.state.images.map(image => <img src={image} />)}
+            this.state.images.map(image => <img key={image+this.state.refresh}  src={image}/>)}
           <p>{this.props.url}</p>
         </div>
       </ErrorBoundary>

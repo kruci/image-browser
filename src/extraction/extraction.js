@@ -1,7 +1,7 @@
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
-function getIamgesFromPage(url) {
-  return fetch(proxyurl + url)
+function getIamgesFromPage(url, tag) {
+  return fetch(proxyurl+url)
     .then(function(response) {
       // When the page is loaded convert it to text
       return response.text();
@@ -13,21 +13,33 @@ function getIamgesFromPage(url) {
       // Parse the text
       var doc = parser.parseFromString(html, "text/html");
 
-      // You can now even select part of that html as you would in the regular DOM
-      // Example:
-      // var docArticle = doc.querySelector('article').innerHTML;
-
-      //console.log(doc);
-      return Array.from(doc.getElementsByTagName("img")).map(img => img.src);
+      return Array.from(
+        doc.querySelectorAll((tag && tag !== "" ? tag + " " : "") + "img")
+      )
+        .filter(img => {
+          console.log(tag, window.location.hostname);
+          // removes git deploy urls (caused by proxiy)
+          if (img.src.substring(window.location.hostname) >= 0) {
+            return false;
+          }
+          return true;
+        })
+        .map(img => img.src);
     });
 }
 
-export default function rangeUrlImageExtractor(url, from, to) {
+export default function rangeUrlImageExtractor(
+  url,
+  from,
+  to,
+  imageUrlContains,
+  tag
+) {
   let urlsToVisit = [];
-  for (let i = from; i <= to; ++i) {
+  for (let i = parseInt(from); i <= parseInt(to); ++i) {
     const thisUrl = url.replace(" ", i.toString());
 
-    urlsToVisit[thisUrl] = getIamgesFromPage(thisUrl);
+    urlsToVisit[thisUrl] = getIamgesFromPage(thisUrl, tag);
   }
   return urlsToVisit;
 }

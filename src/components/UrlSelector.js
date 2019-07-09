@@ -1,34 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export default function UrlSelector(props) {
-  return (
-    <div className="UrlSelector">
+  const [isExpanded, setIsExpanded] = useState(false);
 
+  return (
+    <div
+      className={"UrlSelector" + (isExpanded ? " expanded" : "")}
+      onMouseOver={() => setIsExpanded(true)}
+      onMouseOut={() => setIsExpanded(false)}
+    >
       <p>Leave blank space in url, it will be replaced by number from range.</p>
 
       <div className="pageUrl">
-      <label htmlFor="pageUrl">Page url</label>
-      <input name="pageUrl" id="pageUrl" onChange={props.handleInputChange} />
+        <label htmlFor="pageUrl">Page url</label>
+        <input
+          name="pageUrl"
+          id="pageUrl"
+          onChange={props.handleInputChange}
+          autocomplete="off"
+        />
       </div>
 
       <div className="range">
-      <label htmlFor="rangeFrom">Range from</label>
-      <input
-        name="rangeFrom"
-        id="rangeFrom"
-        onChange={props.handleInputChange}
-      />
-      <label htmlFor="rangeTo">to</label>
-      <input name="rangeTo" id="rangeTo" onChange={props.handleInputChange} />
+        <label htmlFor="rangeFrom">Range from</label>
+        <input
+          name="rangeFrom"
+          id="rangeFrom"
+          onChange={props.handleInputChange}
+          autocomplete="off"
+        />
+        <label htmlFor="rangeTo">to</label>
+        <input
+          name="rangeTo"
+          id="rangeTo"
+          onChange={props.handleInputChange}
+          autocomplete="off"
+        />
       </div>
 
-      <div className="imagePattern">
-      <label htmlFor="imagePattern">Only images containing </label>
-      <input
-        name="imagePattern"
-        id="imagePattern"
-        onChange={props.handleInputChange}
-      />
+      <div className="imageUrlPattern">
+        <label htmlFor="imageUrlPattern">Only images with url containing</label>
+        <input
+          name="imageUrlPattern"
+          id="imageUrlPattern"
+          onChange={props.handleInputChange}
+          autocomplete="off"
+        />
+      </div>
+
+      <div className="imageTag">
+        <label htmlFor="imageTag">Only images inside elements with tag </label>
+        <input
+          name="imageTag"
+          id="imageTag"
+          onChange={props.handleInputChange}
+          autocomplete="off"
+        />
       </div>
 
       <button onClick={props.search}>Show</button>

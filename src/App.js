@@ -2,27 +2,25 @@ import React from "react";
 import UrlSelector from "./components/UrlSelector";
 import ImageList from "./components/ImageList";
 import Footer from "./components/Footer";
-import ImagesSinglePage from "./components/ImagesSinglePage";
 import rangeUrlImageExtractor from "./extraction/extraction.js";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {refresh: false};
   }
 
   search = event => {
-    if (
-      this.state["pageUrl"] &&
-      this.state["rangeFrom"] &&
-      this.state["rangeTo"]
-    ) {
+    if (this.state["pageUrl"]) {
       const pagesWithImages = rangeUrlImageExtractor(
         this.state["pageUrl"],
-        this.state["rangeFrom"],
-        this.state["rangeTo"]
-      );
-      this.setState({ images: pagesWithImages });
+        this.state["rangeFrom"] || "0",
+        this.state["rangeTo"] || "0",
+        this.state["imageUrlPattern"] || undefined,
+        this.state["imageTag"] || undefined
+      )
+
+      this.setState({ images: pagesWithImages, refresh:!this.state.refresh });
     } else {
       window.alert("Missing parameters");
     }
@@ -45,7 +43,10 @@ class App extends React.Component {
           search={this.search}
           handleInputChange={this.handleInputChange}
         />
-        <ImageList images={this.state.images !== undefined && this.state.images} />
+        <ImageList
+          images={this.state.images !== undefined && this.state.images}
+          refresh={this.state.refresh}
+        />
         <Footer />
       </div>
     );
