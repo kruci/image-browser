@@ -9,9 +9,9 @@ export default function UrlSelector(props) {
       onMouseOver={() => setIsExpanded(true)}
       onMouseOut={() => setIsExpanded(false)}
     >
-      <p>Leave blank space in url, it will be replaced by number from range.</p>
 
       <div className="pageUrl">
+      <form>
         <label htmlFor="pageUrl">Page url</label>
         <input
           name="pageUrl"
@@ -19,7 +19,10 @@ export default function UrlSelector(props) {
           onChange={props.handleInputChange}
           autocomplete="off"
         />
+        </form>
       </div>
+
+      <p>Leave blank space in url, it will be replaced by number from range.</p>
 
       <div className="range">
         <label htmlFor="rangeFrom">Range from</label>

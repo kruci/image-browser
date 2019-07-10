@@ -30,8 +30,6 @@ code {
   visibility: visible;
   max-height: fit-content;
   padding-bottom: 1em;
-  padding-left: 10%;
-  padding-right: 10%;
 }
 
 .UrlSelector .imageUrlPattern,.UrlSelector .range,.UrlSelector .imageTag,.UrlSelector p,.UrlSelector button {
@@ -55,7 +53,8 @@ code {
   color: rgb(7, 166, 49);
   font-weight: bold;
   margin: 0;
-  padding-bottom: 1em;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
 }
 
 .UrlSelector button {
